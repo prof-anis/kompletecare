@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('laboratory_tests', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->foreignId('laboratory_test_group_id')->constrained();
             $table->timestamps();
         });
     }
