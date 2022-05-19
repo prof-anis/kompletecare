@@ -24,5 +24,5 @@ type Mutation {
             [Int!]! @rules(apply: ["exists:laboratory_tests,id"])
                   @rulesForArray(apply: ["min:1"])
                   ): SendLaboratoryTestResponse  @guard
-    @field(resolver: "App\\GraphQl\\Mutations\\SendUserLaboratoryTest")
+    @field(resolver: "App\\GraphQL\\Mutations\\SendUserLaboratoryTest")
 }
