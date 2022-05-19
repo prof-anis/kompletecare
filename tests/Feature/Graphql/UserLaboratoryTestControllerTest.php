@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\Feature\Graphql;
-
 
 use App\Mail\UserLaboratoryTestMail;
 use App\Models\LaboratoryTest;
@@ -20,31 +18,37 @@ class UserLaboratoryTestControllerTest extends TestCase
         $this->artisan('db:seed');
     }
 
-    public function test_will_handle_submitted_data()
+    /**
+     * @test
+     */
+    public function willHandleSubmittedData(): void
     {
         Mail::fake();
         $laboratoryTests = LaboratoryTest::limit(5)->inRandomOrder()->pluck('id')->toArray();
         $this->assertCount(5, $laboratoryTests);
 
-        $laboratoryTests = implode(",", $laboratoryTests);
-        $this->withToken(base64_encode("User Access Token"))->graphQL("
+        $laboratoryTests = implode(',', $laboratoryTests);
+        $this->withToken(base64_encode('User Access Token'))->graphQL("
           mutation {
             SendUserLaboratoryTest(userID: 2, laboratoryTests: [{$laboratoryTests}]) {
             message
           }
           }
         ")->assertExactJson([
-            "data" => [
-                "SendUserLaboratoryTest" => [
-                    "message" => "Records sent successfully."
-                ]
-            ]
+            'data' => [
+                'SendUserLaboratoryTest' => [
+                    'message' => 'Records sent successfully.',
+                ],
+            ],
         ]);
 
         Mail::assertQueued(UserLaboratoryTestMail::class);
     }
 
-    public function test_will_return_unauthenticated_for_users_who_are_not_authenticated()
+    /**
+     * @test
+     */
+    public function willReturnUnauthenticatedForUsersWhoAreNotAuthenticated(): void
     {
         $this->graphQL('
           mutation {
@@ -53,17 +57,17 @@ class UserLaboratoryTestControllerTest extends TestCase
           }
           }
         ')->assertJson([
-            "errors" => [
+            'errors' => [
                 [
-                    "message" => "Unauthenticated.",
-                    "extensions" => [
-                        "guards" => [
-                            "sanctum"
+                    'message'    => 'Unauthenticated.',
+                    'extensions' => [
+                        'guards' => [
+                            'sanctum',
                         ],
-                        "category" => "authentication"
-                    ]
-                ]
-            ]
+                        'category' => 'authentication',
+                    ],
+                ],
+            ],
         ]);
     }
 }

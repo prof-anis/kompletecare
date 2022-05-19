@@ -20,12 +20,12 @@ class UserLaboratoryTestMail extends Mailable implements ShouldQueue
     public function __construct(private EloquentCollection $laboratoryTests, private User $user)
     {
         $this->laboratoryTestGroup = $this->laboratoryTests
-            ->pluck("laboratoryTestGroup")
+            ->pluck('laboratoryTestGroup')
             ->unique()
-            ->map(function(LaboratoryTestGroup $laboratoryTestGroup) {
+            ->map(function (LaboratoryTestGroup $laboratoryTestGroup) {
                 $laboratoryTestGroup->setRelation(
-                    "laboratoryTest",
-                    $this->laboratoryTests->where("laboratory_test_group_id", $laboratoryTestGroup['id'])
+                    'laboratoryTest',
+                    $this->laboratoryTests->where('laboratory_test_group_id', $laboratoryTestGroup['id'])
                 );
 
                 return $laboratoryTestGroup;
@@ -34,9 +34,9 @@ class UserLaboratoryTestMail extends Mailable implements ShouldQueue
 
     public function build(): UserLaboratoryTestMail
     {
-        return $this->markdown('mails.user.laboratory-tests',  [
-            "laboratoryTestGroups" => $this->laboratoryTestGroup,
-            "user" => $this->user
+        return $this->markdown('mails.user.laboratory-tests', [
+            'laboratoryTestGroups' => $this->laboratoryTestGroup,
+            'user'                 => $this->user,
         ])->subject("{$this->user->name} medical data");
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Graphql;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
 use Tests\TestCase;
 
@@ -16,10 +15,12 @@ class LaboratoryTestControllerTest extends TestCase
         $this->artisan('db:seed');
     }
 
-
-    public function test_will_return_laboratory_tests()
+    /**
+     * @test
+     */
+    public function willReturnLaboratoryTests(): void
     {
-        $response = $this->withToken(base64_encode("User Access Token"))
+        $response = $this->withToken(base64_encode('User Access Token'))
             ->graphQL('{
                 laboratoryTestGroup(first: 10) {
                     data {
@@ -40,7 +41,10 @@ class LaboratoryTestControllerTest extends TestCase
         $this->assertCount(4, $response['data']['laboratoryTestGroup']['data']);
     }
 
-    public function test_will_return_unauthenticated_response_if_user_is_not_authenticated()
+    /**
+     * @test
+     */
+    public function willReturnUnauthenticatedResponseIfUserIsNotAuthenticated(): void
     {
         $this->graphQL('{
                 laboratoryTestGroup(first: 10) {
@@ -58,17 +62,17 @@ class LaboratoryTestControllerTest extends TestCase
                     }
                 }
             }')->assertJson([
-            "errors" => [
+            'errors' => [
                 [
-                    "message" => "Unauthenticated.",
-                    "extensions" => [
-                        "guards" => [
-                            "sanctum"
+                    'message'    => 'Unauthenticated.',
+                    'extensions' => [
+                        'guards' => [
+                            'sanctum',
                         ],
-                        "category" => "authentication"
-                    ]
-                ]
-            ]
+                        'category' => 'authentication',
+                    ],
+                ],
+            ],
         ]);
     }
 }

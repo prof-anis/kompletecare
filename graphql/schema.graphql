@@ -13,7 +13,7 @@ type Query {
     laboratoryTestGroup(first: Int!, page: Int): [LaboratoryTestGroup] @paginate @guard
 }
 
-type UserLaboratoryTestResponse {
+type SendLaboratoryTestResponse {
     message: String
 }
 
@@ -23,6 +23,6 @@ type Mutation {
         laboratoryTests:
             [Int!]! @rules(apply: ["exists:laboratory_tests,id"])
                   @rulesForArray(apply: ["min:1"])
-                  ): UserLaboratoryTestResponse  @guard
+                  ): SendLaboratoryTestResponse  @guard
     @field(resolver: "App\\GraphQl\\Mutations\\SendUserLaboratoryTest")
 }

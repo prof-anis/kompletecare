@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Endpoints;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LaboratoryTestControllerTest extends TestCase
@@ -13,17 +12,22 @@ class LaboratoryTestControllerTest extends TestCase
         $this->artisan('db:seed');
     }
 
-
-    public function test_will_return_laboratory_tests()
+    /**
+     * @test
+     */
+    public function willReturnLaboratoryTests(): void
     {
-        $response = $this->withToken(base64_encode("User Access Token"))
-            ->getJson("/api/laboratory-tests");
+        $response = $this->withToken(base64_encode('User Access Token'))
+            ->getJson('/api/laboratory-tests');
 
         $this->assertCount(4, $response['data']);
     }
 
-    public function test_will_return_unauthenticated_response_if_user_is_not_authenticated()
+    /**
+     * @test
+     */
+    public function willReturnUnauthenticatedResponseIfUserIsNotAuthenticated(): void
     {
-        $this->getJson("/api/laboratory-tests")->assertStatus(401);
+        $this->getJson('/api/laboratory-tests')->assertStatus(401);
     }
 }

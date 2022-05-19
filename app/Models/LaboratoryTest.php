@@ -10,7 +10,6 @@ class LaboratoryTest extends Model
 {
     use HasFactory;
 
-
     public function laboratoryTestGroup(): BelongsTo
     {
         return $this->belongsTo(LaboratoryTestGroup::class);
