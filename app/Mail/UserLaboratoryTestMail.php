@@ -32,7 +32,6 @@ class UserLaboratoryTestMail extends Mailable implements ShouldQueue
             });
     }
 
-
     public function build(): UserLaboratoryTestMail
     {
         return $this->markdown('mails.user.laboratory-tests',  [
