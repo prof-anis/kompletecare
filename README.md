@@ -15,7 +15,7 @@ Running the app
 
 >/api/laboratory-tests/{user_id}
 
-A Documentation of the API can be found here https://documenter.getpostman.com/view/19195441/UyxnEkLg#7e2d7dca-b214-4dbd-9a9d-7a03609b61a6
+A Documentation of the API and Graphql can be found here https://documenter.getpostman.com/view/19195441/UyxnEkLg#7e2d7dca-b214-4dbd-9a9d-7a03609b61a6
 
 Two users have been seeded with ID 1 and 2 respectively. Any of them can be used to replace the {user_id} in the second endpoint
 Both endpoints are only accessible by authenticated users who use a bearer token with the token set as `VXNlciBBY2Nlc3MgVG9rZW4=`
