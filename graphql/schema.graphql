@@ -1,7 +1,7 @@
 type LaboratoryTestGroup {
     id: ID,
     name: String
-    laboratoryTests: [LaboratoryTest!]! @hasMany
+    laboratoryTests: [LaboratoryTest] @hasMany
 }
 
 type LaboratoryTest {
@@ -19,9 +19,9 @@ type UserLaboratoryTestResponse {
 
 type Mutation {
     SendUserLaboratoryTest(
-        userID:ID @rules(apply: ["exists:users,id"]),
+        userID:ID! @rules(apply: ["exists:users,id"]),
         laboratoryTests:
-            [Int] @rules(apply: ["exists:laboratory_tests,id"])
+            [Int!]! @rules(apply: ["exists:laboratory_tests,id"])
                   @rulesForArray(apply: ["min:1"])
                   ): UserLaboratoryTestResponse  @guard
     @field(resolver: "App\\GraphQl\\Mutations\\SendUserLaboratoryTest")
